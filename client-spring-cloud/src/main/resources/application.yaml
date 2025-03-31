@@ -1,0 +1,14 @@
+server:
+  port: 18081
+spring:
+  application:
+    name: client-spring-cloud-spring-application-name
+eureka:
+  client:
+    service-url:
+      defaultZone: ${DISCOVERY_SERVER_URL:http://localhost:18761/eureka}
+api:
+  spam:
+    enabled: true
+  server:
+    url: http://localhost:18080
