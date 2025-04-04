@@ -1,8 +1,8 @@
 services:
   eureka-spring-cloud:
     build:
-      context: ./eureka-spring-cloud
-      dockerfile: ../Dockerfile.java21
+      context: ../eureka-spring-cloud
+      dockerfile: ../docker/Dockerfile.java21
     container_name: eureka-spring-cloud
     image: eureka-spring-cloud
     healthcheck:
@@ -16,8 +16,8 @@ services:
       - 18761:8080
   api-spring-cloud:
     build:
-      context: ./api-spring-cloud
-      dockerfile: ../Dockerfile.java21
+      context: ../api-spring-cloud
+      dockerfile: ../docker/Dockerfile.java21
     image: api-spring-cloud
     healthcheck:
       test: [ "CMD", "curl", "--fail", "http://localhost:8080/actuator/health" ]
@@ -25,7 +25,7 @@ services:
       timeout: 1s
       interval: 1s
     deploy:
-      replicas: 3
+      replicas: 2
     depends_on:
       eureka-spring-cloud:
         condition: service_healthy
@@ -35,8 +35,8 @@ services:
       DISCOVERY_SERVER_URL: http://eureka-spring-cloud:8080/eureka
   client-spring-cloud:
     build:
-      context: ./client-spring-cloud
-      dockerfile: ../Dockerfile.java21
+      context: ../client-spring-cloud
+      dockerfile: ../docker/Dockerfile.java21
     container_name: client-spring-cloud
     image: client-spring-cloud
     depends_on:

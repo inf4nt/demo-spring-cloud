@@ -10,7 +10,8 @@ import java.util.UUID;
 @RequestMapping
 public class ApiController {
 
-    private final String instanceId = UUID.randomUUID().toString();
+    private final String instanceId = UUID.randomUUID().toString()
+            .substring(0, 4);
 
     @GetMapping
     public ApiResponse<String> getIndex() {
