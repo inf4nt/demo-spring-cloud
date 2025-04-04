@@ -16,7 +16,7 @@ public class SpamApiComponent {
     @Autowired
     private ApiFeignClient feignClient;
 
-    @Scheduled(fixedRate = 2000)
+    @Scheduled(fixedRate = 1000, initialDelay = 30000)
     public void spam() {
         log.info("Spam api started");
         ApiFeignClient.ApiResponse<?> api = feignClient.getApi();

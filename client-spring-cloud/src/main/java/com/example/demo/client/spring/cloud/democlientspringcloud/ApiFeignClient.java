@@ -4,7 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @FeignClient(
-        name = "${api.service.name:api-spring-cloud}",
+        name = "${api.service.name}",
         path = "/api",
         dismiss404 = true
 )

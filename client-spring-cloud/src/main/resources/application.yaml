@@ -1,5 +1,5 @@
 server:
-  port: 18081
+  port: 19080
 spring:
   application:
     name: client-spring-cloud-spring-application-name
@@ -10,5 +10,5 @@ eureka:
 api:
   spam:
     enabled: true
-  server:
-    url: http://localhost:18080
+  service:
+    name: api-spring-cloud-spring-application-name
