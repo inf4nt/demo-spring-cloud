@@ -5,22 +5,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
 @RequestMapping
 public class ClientController {
 
-    private final String id = UUID.randomUUID().toString();
+    private final String instanceId = UUID.randomUUID().toString()
+            .substring(0, 4);
 
     @Autowired
     private ApiFeignClient apiFeignClient;
 
     @GetMapping
     public Object getClient() {
-        ApiFeignClient.ApiResponse<?> api = apiFeignClient.getApi();
-        return new ClientResponse<>(id, api);
+        Object apiResponse = apiFeignClient.getApi();
+        return Map.of(
+                "instanceId", instanceId,
+                "apiResponse", apiResponse
+        );
     }
-
-    public record ClientResponse<T>(String instanceId, T value) {}
 }

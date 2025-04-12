@@ -2,7 +2,7 @@ server:
   port: 18761
 eureka:
   client:
-    serviceUrl:
+    service-url:
       defaultZone: http://localhost:${server.port}/eureka/
     registerWithEureka: false
     fetchRegistry: false

@@ -7,8 +7,9 @@ eureka:
   client:
     service-url:
       defaultZone: ${DISCOVERY_SERVER_URL:http://localhost:18761/eureka}
+spam:
+  enabled: true
+  timeout: 1_000
 api:
-  spam:
-    enabled: true
   service:
     name: api-spring-cloud-spring-application-name

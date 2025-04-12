@@ -3,23 +3,21 @@ package com.example.demo.client.spring.cloud.democlientspringcloud;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-@Component
-@EnableScheduling
-@ConditionalOnProperty(value = "api.spam.enabled", havingValue = "true")
 @Slf4j
+@Component
+@ConditionalOnProperty(value = "spam.enabled", havingValue = "true")
 public class SpamApiComponent {
 
     @Autowired
     private ApiFeignClient feignClient;
 
-    @Scheduled(fixedRate = 1000, initialDelay = 30000)
+    @Scheduled(fixedRateString = "${spam.timeout}")
     public void spam() {
         log.info("Spam api started");
-        ApiFeignClient.ApiResponse<?> api = feignClient.getApi();
+        Object api = feignClient.getApi();
         log.info("Spam api finished {}", api);
     }
 }

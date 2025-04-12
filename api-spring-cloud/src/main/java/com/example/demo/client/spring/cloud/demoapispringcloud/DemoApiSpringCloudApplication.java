@@ -11,5 +11,4 @@ public class DemoApiSpringCloudApplication {
     public static void main(String[] args) {
         SpringApplication.run(DemoApiSpringCloudApplication.class, args);
     }
-
 }
