@@ -4,8 +4,6 @@ import org.awaitility.Awaitility;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.Network;
 
@@ -16,8 +14,6 @@ import java.time.Duration;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-@SpringBootTest
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class IntegrationTest {
 
     private static GenericContainer<?> EUREKA_CONTAINER;
@@ -57,6 +53,19 @@ public class IntegrationTest {
         waitUntilAppRegistersInEureka();
     }
 
+    @AfterAll
+    public static void after() {
+        if (CLIENT_CONTAINER != null) {
+            CLIENT_CONTAINER.stop();
+        }
+        if (API_CONTAINER != null) {
+            API_CONTAINER.stop();
+        }
+        if (EUREKA_CONTAINER != null) {
+            EUREKA_CONTAINER.stop();
+        }
+    }
+
     private static void waitUntilAppRegistersInEureka() {
         Awaitility.await()
                 .timeout(Duration.ofSeconds(60))
@@ -69,19 +78,6 @@ public class IntegrationTest {
                     int responseCode = connection.getResponseCode();
                     return responseCode == HttpURLConnection.HTTP_OK;
                 });
-    }
-
-    @AfterAll
-    public static void after() {
-        if (CLIENT_CONTAINER != null) {
-            CLIENT_CONTAINER.stop();
-        }
-        if (API_CONTAINER != null) {
-            API_CONTAINER.stop();
-        }
-        if (EUREKA_CONTAINER != null) {
-            EUREKA_CONTAINER.stop();
-        }
     }
 
     @Test
