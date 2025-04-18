@@ -6,7 +6,7 @@ COPY pom.xml .
 RUN mvn verify clean --fail-never
 
 COPY src/ src/
-RUN mvn package
+RUN mvn package -Dmaven.test.skip=true
 
 FROM openjdk:21
 

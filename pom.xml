@@ -13,5 +13,6 @@
         <module>api-spring-cloud</module>
         <module>client-spring-cloud</module>
         <module>eureka-spring-cloud</module>
+        <module>integration-test</module>
     </modules>
 </project>

@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: api-spring-cloud-spring-application-name
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false

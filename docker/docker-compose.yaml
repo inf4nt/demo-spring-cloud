@@ -24,7 +24,7 @@ services:
       timeout: 1s
       interval: 1s
     deploy:
-      replicas: 2
+      replicas: 5
     depends_on:
       eureka-spring-cloud:
         condition: service_healthy
