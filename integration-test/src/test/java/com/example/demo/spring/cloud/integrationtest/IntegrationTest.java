@@ -54,10 +54,10 @@ public class IntegrationTest {
                 .dependsOn(EUREKA_CONTAINER, API_CONTAINER);
         CLIENT_CONTAINER.start();
 
-        waitUntilAppRegistersInInEureka();
+        waitUntilAppRegistersInEureka();
     }
 
-    private static void waitUntilAppRegistersInInEureka() {
+    private static void waitUntilAppRegistersInEureka() {
         Awaitility.await()
                 .timeout(Duration.ofSeconds(60))
                 .ignoreExceptions()
