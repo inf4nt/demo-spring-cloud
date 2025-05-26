@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-spring-cloud-deployment
+  labels:
+    app: client-spring-cloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client-spring-cloud
+  template:
+    metadata:
+      labels:
+        app: client-spring-cloud
+    spec:
+      containers:
+        - name: client-spring-cloud
+          image: client-spring-cloud
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8086
+          env:
+            - name: SERVER_PORT
+              value: "8080"
+            - name: EUREKA_CLIENT_ENABLED
+              value: "false"
+            - name: SPAM_ENABLED
+              value: "false"
+            - name: SPAM_TIMEOUT
+              value: "1000"
+            - name: API_SERVICE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: client-spring-cloud-configmap
+                  key: api_spring_cloud_service_name
+            - name: API_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: client-spring-cloud-configmap
+                  key: api_spring_cloud_url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-spring-cloud-service
+spec:
+  selector:
+    app: client-spring-cloud
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

@@ -3,7 +3,7 @@ FROM maven:3.9.9 AS build
 WORKDIR /project
 
 COPY pom.xml .
-RUN mvn verify clean --fail-never
+RUN mvn clean verify --fail-never
 
 COPY src/ src/
 RUN mvn package -Dmaven.test.skip=true

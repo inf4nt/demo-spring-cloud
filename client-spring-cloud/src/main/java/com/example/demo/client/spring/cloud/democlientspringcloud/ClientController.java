@@ -19,6 +19,14 @@ public class ClientController {
     private ApiFeignClient apiFeignClient;
 
     @GetMapping
+    public Object index() {
+        return Map.of(
+                "instanceId", instanceId,
+                "value", "Client is running. Call /client to work with it."
+        );
+    }
+
+    @GetMapping("/client")
     public Object getClient() {
         Object apiResponse = apiFeignClient.getApi();
         return Map.of(

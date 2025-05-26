@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: client-spring-cloud-configmap
+data:
+  api_spring_cloud_service_name: "api-spring-cloud-service"
+  api_spring_cloud_url: "api-spring-cloud-service:8080"

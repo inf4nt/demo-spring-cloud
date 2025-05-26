@@ -18,7 +18,7 @@ public class ApiController {
     public Object getIndex() {
         return Map.of(
                 "instanceId", instanceId,
-                "value", "Hello world"
+                "value", "Api is running. Call /api to work with it."
         );
     }
 
