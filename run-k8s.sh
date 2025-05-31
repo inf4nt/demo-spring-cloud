@@ -16,4 +16,4 @@ kubectl apply -f k8s/client-spring-cloud.configmap.yaml
 
 kubectl apply -f k8s/client-spring-cloud.deployment.service.yaml
 
-echo -e '\033[0;31mrun "minikube service client-spring-cloud" to open a tunnel'
+echo -e '\033[0;31mrun "minikube server --all" to open a tunnel'

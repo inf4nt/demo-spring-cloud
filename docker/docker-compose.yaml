@@ -32,6 +32,7 @@ services:
       SERVER_PORT: 8080
       SPRING_APPLICATION_NAME: api-spring-cloud-spring-application-name
       DISCOVERY_SERVER_URL: http://eureka-spring-cloud:8080/eureka
+      SPRING_PROFILES_ACTIVE: production
   client-spring-cloud:
     build:
       context: ../client-spring-cloud
@@ -49,3 +50,4 @@ services:
       SPAM_ENABLED: true
       API_SERVICE_NAME: api-spring-cloud-spring-application-name
       DISCOVERY_SERVER_URL: http://eureka-spring-cloud:8080/eureka
+      SPRING_PROFILES_ACTIVE: production

@@ -1,4 +1,4 @@
-package com.example.demo.client.spring.cloud.democlientspringcloud;
+package demo.client.spring.cloud;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

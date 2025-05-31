@@ -1,4 +1,4 @@
-package com.example.demo.client.spring.cloud.demoapispringcloud;
+package demo.api.spring.cloud;
 
 
 import org.junit.jupiter.api.Test;

@@ -29,6 +29,8 @@ spec:
               value: "false"
             - name: SPAM_TIMEOUT
               value: "1000"
+            - name: SPRING_PROFILES_ACTIVE
+              value: "production"
             - name: API_SERVICE_NAME
               valueFrom:
                 configMapKeyRef:

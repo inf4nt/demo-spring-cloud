@@ -1,5 +1,6 @@
-package com.example.demo.client.spring.cloud.demoapispringcloud;
+package demo.client.spring.cloud;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,25 +10,28 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping
-public class ApiController {
+public class ClientController {
 
     private static final String instanceId = UUID.randomUUID().toString()
             .substring(0, 4);
 
+    @Autowired
+    private ApiFeignClient apiFeignClient;
+
     @GetMapping
-    public Object getIndex() {
+    public Object index() {
         return Map.of(
                 "instanceId", instanceId,
-                "value", "Api is running. Call /api to work with it."
+                "value", "Client is running. Call /client to work with it."
         );
     }
 
-    @GetMapping("/api")
-    public Object getApi() {
+    @GetMapping("/client")
+    public Object getClient() {
+        Object apiResponse = apiFeignClient.getApi();
         return Map.of(
                 "instanceId", instanceId,
-                "value", UUID.randomUUID().toString()
-                        .substring(0, 4)
+                "apiResponse", apiResponse
         );
     }
 }

@@ -6,7 +6,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: ${DISCOVERY_SERVER_URL:http://localhost:18761/eureka}
+      defaultZone: http://localhost:18761/eureka
 spam:
   enabled: true
   timeout: 1_000
