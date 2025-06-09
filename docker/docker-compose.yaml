@@ -2,7 +2,7 @@ services:
   eureka-spring-cloud:
     build:
       context: ../eureka-spring-cloud
-      dockerfile: ../docker/Dockerfile.java21
+      dockerfile: java21.Dockerfile
     image: eureka-spring-cloud
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8080/actuator/health"]
@@ -16,7 +16,7 @@ services:
   api-spring-cloud:
     build:
       context: ../api-spring-cloud
-      dockerfile: ../docker/Dockerfile.java21
+      dockerfile: java21.Dockerfile
     image: api-spring-cloud
     healthcheck:
       test: [ "CMD", "curl", "--fail", "http://localhost:8080/actuator/health" ]
@@ -36,7 +36,7 @@ services:
   client-spring-cloud:
     build:
       context: ../client-spring-cloud
-      dockerfile: ../docker/Dockerfile.java21
+      dockerfile: java21.Dockerfile
     image: client-spring-cloud
     depends_on:
       eureka-spring-cloud:
