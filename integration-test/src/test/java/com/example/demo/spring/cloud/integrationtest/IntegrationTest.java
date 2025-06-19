@@ -36,6 +36,7 @@ public class IntegrationTest {
                 .withExposedPorts(8080)
                 .withNetwork(Network.SHARED)
                 .withEnv("SERVER_PORT", "8080")
+                .withEnv("SPRING_PROFILES_ACTIVE", "production")
                 .withEnv("SPRING_APPLICATION_NAME", "api-spring-cloud-spring-application-name")
                 .withEnv("DISCOVERY_SERVER_URL", "http://eureka:8080/eureka")
                 .dependsOn(EUREKA_CONTAINER);
@@ -45,6 +46,8 @@ public class IntegrationTest {
                 .withExposedPorts(8080)
                 .withNetwork(Network.SHARED)
                 .withEnv("SERVER_PORT", "8080")
+                .withEnv("SPAM_ENABLED", "false")
+                .withEnv("SPRING_PROFILES_ACTIVE", "production")
                 .withEnv("SPRING_APPLICATION_NAME", "client-spring-cloud-spring-application-name")
                 .withEnv("DISCOVERY_SERVER_URL", "http://eureka:8080/eureka")
                 .dependsOn(EUREKA_CONTAINER, API_CONTAINER);
@@ -70,9 +73,11 @@ public class IntegrationTest {
         Awaitility.await()
                 .timeout(Duration.ofSeconds(60))
                 .ignoreExceptions()
+                .pollInterval(Duration.ofSeconds(5))
+                .logging(__ -> System.out.println("Waiting for App to be available in the Client"))
                 .until(() -> {
                     String clientBaseUrl = "http://" + CLIENT_CONTAINER.getHost() + ":" + CLIENT_CONTAINER.getFirstMappedPort();
-                    HttpURLConnection connection = (HttpURLConnection) new URL(clientBaseUrl).openConnection();
+                    HttpURLConnection connection = (HttpURLConnection) new URL(clientBaseUrl + "/client").openConnection();
                     connection.setRequestMethod("GET");
 
                     int responseCode = connection.getResponseCode();
@@ -102,6 +107,15 @@ public class IntegrationTest {
     public void clientRoot() throws Exception {
         String clientBaseUrl = "http://" + CLIENT_CONTAINER.getHost() + ":" + CLIENT_CONTAINER.getFirstMappedPort();
         HttpURLConnection connection = (HttpURLConnection) new URL(clientBaseUrl).openConnection();
+        connection.setRequestMethod("GET");
+
+        assertThat(connection.getResponseCode(), is(200));
+    }
+
+    @Test
+    public void clientClient() throws Exception {
+        String clientBaseUrl = "http://" + CLIENT_CONTAINER.getHost() + ":" + CLIENT_CONTAINER.getFirstMappedPort();
+        HttpURLConnection connection = (HttpURLConnection) new URL(clientBaseUrl + "/client").openConnection();
         connection.setRequestMethod("GET");
 
         assertThat(connection.getResponseCode(), is(200));
