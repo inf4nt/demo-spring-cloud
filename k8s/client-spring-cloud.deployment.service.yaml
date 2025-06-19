@@ -28,7 +28,7 @@ spec:
             - name: SPAM_ENABLED
               value: "false"
             - name: SPAM_TIMEOUT
-              value: "1_000"
+              value: "1000"
             - name: SPRING_PROFILES_ACTIVE
               value: "production"
             - name: API_SERVICE_NAME

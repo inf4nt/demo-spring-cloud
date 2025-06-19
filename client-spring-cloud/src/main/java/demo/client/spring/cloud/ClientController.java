@@ -28,7 +28,7 @@ public class ClientController {
 
     @GetMapping("/client")
     public Object getClient() {
-        Object apiResponse = apiFeignClient.getApi();
+        var apiResponse = apiFeignClient.getApi();
         return Map.of(
                 "instanceId", instanceId,
                 "apiResponse", apiResponse
