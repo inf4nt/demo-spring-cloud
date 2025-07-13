@@ -8,6 +8,7 @@ import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.Network;
 
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.time.Duration;
 
@@ -53,7 +54,7 @@ public class IntegrationTest {
                 .dependsOn(EUREKA_CONTAINER, API_CONTAINER);
         CLIENT_CONTAINER.start();
 
-        waitUntilAppRegistersInEureka();
+        waitUntilApplicationAndClientRegistersInEureka();
     }
 
     @AfterAll
@@ -69,19 +70,29 @@ public class IntegrationTest {
         }
     }
 
-    private static void waitUntilAppRegistersInEureka() {
+    private static void waitUntilApplicationAndClientRegistersInEureka() {
         Awaitility.await()
                 .timeout(Duration.ofSeconds(60))
                 .ignoreExceptions()
-                .pollInterval(Duration.ofSeconds(5))
-                .logging(__ -> System.out.println("Waiting for App to be available in the Client"))
-                .until(() -> {
-                    String clientBaseUrl = "http://" + CLIENT_CONTAINER.getHost() + ":" + CLIENT_CONTAINER.getFirstMappedPort();
-                    HttpURLConnection connection = (HttpURLConnection) new URL(clientBaseUrl + "/client").openConnection();
-                    connection.setRequestMethod("GET");
+                .pollInterval(Duration.ofSeconds(1))
+                .logging(__ -> System.out.println("Waiting for applications to be available in the Eureka"))
+                .untilAsserted(() -> {
+                    String eurekaUrl = "http://" + EUREKA_CONTAINER.getHost() + ":" + EUREKA_CONTAINER.getFirstMappedPort();
+                    String eurekaAppsUrl = eurekaUrl + "/eureka/apps";
 
-                    int responseCode = connection.getResponseCode();
-                    return responseCode == HttpURLConnection.HTTP_OK;
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) URI
+                            .create(eurekaAppsUrl + "/api-spring-cloud-spring-application-name")
+                            .toURL()
+                            .openConnection();
+                    httpURLConnection.setRequestMethod("GET");
+                    assertThat(httpURLConnection.getResponseCode(), is(200));
+
+                    httpURLConnection = (HttpURLConnection) URI
+                            .create(eurekaAppsUrl + "/client-spring-cloud-spring-application-name")
+                            .toURL()
+                            .openConnection();
+                    httpURLConnection.setRequestMethod("GET");
+                    assertThat(httpURLConnection.getResponseCode(), is(200));
                 });
     }
 
@@ -113,11 +124,19 @@ public class IntegrationTest {
     }
 
     @Test
-    public void clientClient() throws Exception {
-        String clientBaseUrl = "http://" + CLIENT_CONTAINER.getHost() + ":" + CLIENT_CONTAINER.getFirstMappedPort();
-        HttpURLConnection connection = (HttpURLConnection) new URL(clientBaseUrl + "/client").openConnection();
-        connection.setRequestMethod("GET");
+    public void clientClient() {
+        Awaitility
+                .await()
+                .timeout(Duration.ofSeconds(60))
+                .pollInterval(Duration.ofSeconds(1))
+                .ignoreExceptions()
+                .logging(__ -> System.out.println("Retrying /client"))
+                .untilAsserted(() -> {
+                    String clientBaseUrl = "http://" + CLIENT_CONTAINER.getHost() + ":" + CLIENT_CONTAINER.getFirstMappedPort();
+                    HttpURLConnection connection = (HttpURLConnection) new URL(clientBaseUrl + "/client").openConnection();
+                    connection.setRequestMethod("GET");
 
-        assertThat(connection.getResponseCode(), is(200));
+                    assertThat(connection.getResponseCode(), is(200));
+                });
     }
 }
