@@ -2,9 +2,9 @@ minikube delete
 
 minikube start
 
-docker build -t api-spring-cloud api-spring-cloud/ -f docker/java21.Dockerfile
+docker build -t api-spring-cloud api-spring-cloud/ -f docker/Dockerfile.java21
 
-docker build -t client-spring-cloud client-spring-cloud/ -f docker/java21.Dockerfile
+docker build -t client-spring-cloud client-spring-cloud/ -f docker/Dockerfile.java21
 
 minikube image load api-spring-cloud:latest
 
