@@ -12,7 +12,9 @@ import java.util.UUID;
 @RequestMapping
 public class ClientController {
 
-    private static final String INSTANCE_ID = UUID.randomUUID().toString()
+    private static final String INSTANCE_ID = UUID
+            .randomUUID()
+            .toString()
             .substring(0, 4);
 
     @Autowired
