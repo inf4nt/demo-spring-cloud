@@ -12,7 +12,7 @@ import java.util.UUID;
 @RequestMapping
 public class ClientController {
 
-    private static final String instanceId = UUID.randomUUID().toString()
+    private static final String INSTANCE_ID = UUID.randomUUID().toString()
             .substring(0, 4);
 
     @Autowired
@@ -21,7 +21,7 @@ public class ClientController {
     @GetMapping
     public Object index() {
         return Map.of(
-                "instanceId", instanceId,
+                "instanceId", INSTANCE_ID,
                 "value", "Client is running. Call /client to work with it."
         );
     }
@@ -30,7 +30,7 @@ public class ClientController {
     public Object getClient() {
         var apiResponse = apiFeignClient.getApi();
         return Map.of(
-                "instanceId", instanceId,
+                "instanceId", INSTANCE_ID,
                 "apiResponse", apiResponse
         );
     }

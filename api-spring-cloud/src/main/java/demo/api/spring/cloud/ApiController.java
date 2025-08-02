@@ -11,13 +11,13 @@ import java.util.UUID;
 @RequestMapping
 public class ApiController {
 
-    private static final String instanceId = UUID.randomUUID().toString()
+    private static final String INSTANCE_ID = UUID.randomUUID().toString()
             .substring(0, 4);
 
     @GetMapping
     public Object getIndex() {
         return Map.of(
-                "instanceId", instanceId,
+                "instanceId", INSTANCE_ID,
                 "value", "Api is running. Call /api to work with it."
         );
     }
@@ -25,7 +25,7 @@ public class ApiController {
     @GetMapping("/api")
     public Object getApi() {
         return Map.of(
-                "instanceId", instanceId,
+                "instanceId", INSTANCE_ID,
                 "value", UUID.randomUUID().toString()
                         .substring(0, 4)
         );
