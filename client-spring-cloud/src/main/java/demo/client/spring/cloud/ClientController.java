@@ -23,7 +23,7 @@ public class ClientController {
     @GetMapping
     public Object index() {
         return Map.of(
-                "instanceId", INSTANCE_ID,
+                "instance_id", INSTANCE_ID,
                 "value", "Client is running. Call /client to work with it."
         );
     }
@@ -32,8 +32,8 @@ public class ClientController {
     public Object getClient() {
         var apiResponse = apiFeignClient.getApi();
         return Map.of(
-                "instanceId", INSTANCE_ID,
-                "apiResponse", apiResponse
+                "instance_id", INSTANCE_ID,
+                "api_response", apiResponse
         );
     }
 }

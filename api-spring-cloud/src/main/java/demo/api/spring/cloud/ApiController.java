@@ -19,7 +19,7 @@ public class ApiController {
     @GetMapping
     public Object getIndex() {
         return Map.of(
-                "instanceId", INSTANCE_ID,
+                "instance_id", INSTANCE_ID,
                 "value", "Api is running. Call /api to work with it."
         );
     }
@@ -27,7 +27,7 @@ public class ApiController {
     @GetMapping("/api")
     public Object getApi() {
         return Map.of(
-                "instanceId", INSTANCE_ID,
+                "instance_id", INSTANCE_ID,
                 "value", UUID.randomUUID().toString()
                         .substring(0, 4)
         );
