@@ -11,10 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-@ConditionalOnProperty(
-        value = "spam.enabled",
-        havingValue = "true"
-)
+@ConditionalOnProperty(value = "spam.enabled", havingValue = "true")
 public class SpamApiComponent {
 
     @Autowired
